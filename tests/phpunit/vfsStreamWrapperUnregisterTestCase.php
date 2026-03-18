@@ -11,15 +11,17 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
+use function bovigo\assert\assertThat;
+use function bovigo\assert\expect;
+use function bovigo\assert\predicate\doesNotContain;
+
 use bovigo\callmap\NewInstance;
 use bovigo\vfs\vfsStream;
+
 use bovigo\vfs\vfsStreamException;
 use bovigo\vfs\vfsStreamWrapper;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assertThat;
-use function bovigo\assert\expect;
-use function bovigo\assert\predicate\doesNotContain;
 use function stream_get_wrappers;
 use function stream_wrapper_register;
 use function stream_wrapper_unregister;

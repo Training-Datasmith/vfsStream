@@ -11,14 +11,17 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\expect;
-use function fopen;
-use function stream_select;
+
+use bovigo\vfs\vfsStream;
 
 use const E_WARNING;
+
+use function fopen;
+
+use PHPUnit\Framework\TestCase;
+
+use function stream_select;
 
 /**
  * Test for bovigo\vfs\vfsStreamWrapper.

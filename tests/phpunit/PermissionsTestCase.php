@@ -11,15 +11,19 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamDirectory;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\expect;
+
+use bovigo\vfs\vfsStream;
+
+use bovigo\vfs\vfsStreamDirectory;
+
 use function chgrp;
 use function chmod;
 use function chown;
+
+use PHPUnit\Framework\TestCase;
+
 use function touch;
 
 /**

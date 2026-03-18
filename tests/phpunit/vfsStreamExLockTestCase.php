@@ -11,12 +11,13 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
+
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+
 use function fclose;
 use function file_get_contents;
 use function file_put_contents;
@@ -25,7 +26,10 @@ use function fopen;
 use function fwrite;
 
 use const LOCK_EX;
+
 use const LOCK_UN;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for LOCK_EX behaviour related to file_put_contents().

@@ -11,16 +11,18 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamDirectory;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+use bovigo\vfs\vfsStreamDirectory;
+
 use function file_exists;
 use function file_get_contents;
 use function mkdir;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test that using windows directory separator works correct.

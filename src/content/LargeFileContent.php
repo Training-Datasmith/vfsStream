@@ -140,7 +140,7 @@ class LargeFileContent extends SeekableFileContent implements FileContent
             array_filter(
                 array_keys($this->content),
                 static function ($pos) use ($size): bool {
-                                    return $pos >= $size;
+                    return $pos >= $size;
                 }
             ) as $removePos
         ) {

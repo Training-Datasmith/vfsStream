@@ -11,16 +11,6 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\callmap\NewInstance;
-use bovigo\vfs\content\LargeFileContent;
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamContent;
-use bovigo\vfs\vfsStreamDirectory;
-use bovigo\vfs\vfsStreamWrapper;
-use bovigo\vfs\visitor\vfsStreamVisitor;
-use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
@@ -28,13 +18,28 @@ use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isInstanceOf;
 use function bovigo\assert\predicate\isSameAs;
+
+use bovigo\callmap\NewInstance;
+
 use function bovigo\callmap\verify;
+
+use bovigo\vfs\content\LargeFileContent;
+use bovigo\vfs\vfsStream;
+use bovigo\vfs\vfsStreamContent;
+use bovigo\vfs\vfsStreamDirectory;
+use bovigo\vfs\vfsStreamWrapper;
+use bovigo\vfs\visitor\vfsStreamVisitor;
+
+use const DIRECTORY_SEPARATOR;
+
 use function dirname;
 use function file_exists;
 use function fileperms;
-use function realpath;
 
-use const DIRECTORY_SEPARATOR;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
+
+use function realpath;
 
 /**
  * Test for bovigo\vfs\vfsStream.

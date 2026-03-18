@@ -11,16 +11,20 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests\visitor;
 
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\visitor\vfsStreamPrintVisitor;
-use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+
+use bovigo\vfs\visitor\vfsStreamPrintVisitor;
+
 use function file_get_contents;
 use function fopen;
+
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
+
 use function xml_parser_create;
 
 /**

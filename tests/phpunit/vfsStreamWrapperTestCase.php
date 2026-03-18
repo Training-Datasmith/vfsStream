@@ -11,11 +11,9 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamWrapper;
-
 use function basename;
 use function bovigo\assert\assertEmptyString;
+
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertNull;
 use function bovigo\assert\assertThat;
@@ -28,12 +26,20 @@ use function bovigo\assert\predicate\isNonExistingDirectory;
 use function bovigo\assert\predicate\isNonExistingFile;
 use function bovigo\assert\predicate\isNotEqualTo;
 use function bovigo\assert\predicate\isSameAs;
+
+use bovigo\vfs\vfsStream;
+use bovigo\vfs\vfsStreamWrapper;
+
 use function chgrp;
 use function chmod;
 use function chown;
 use function copy;
 use function decoct;
 use function dirname;
+
+use const E_USER_WARNING;
+use const E_WARNING;
+
 use function fclose;
 use function file_exists;
 use function file_get_contents;
@@ -50,19 +56,19 @@ use function fwrite;
 use function is_executable;
 use function is_readable;
 use function is_writable;
+
+use const PHP_OS;
+use const PHP_VERSION_ID;
+
 use function rename;
 use function spl_object_id;
 use function stat;
 use function stripos;
+
 use function time;
 use function touch;
 use function uniqid;
 use function unlink;
-
-use const E_USER_WARNING;
-use const E_WARNING;
-use const PHP_OS;
-use const PHP_VERSION_ID;
 
 /**
  * Test for bovigo\vfs\vfsStreamWrapper.

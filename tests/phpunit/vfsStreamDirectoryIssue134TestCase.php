@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 //declare(strict_types=1);
 // disabled as the test requires no strict types
 /**
@@ -10,11 +12,12 @@
 
 namespace bovigo\vfs\tests;
 
+use function bovigo\assert\assertNotNull;
+
 use bovigo\vfs\vfsStream;
 use bovigo\vfs\vfsStreamDirectory;
-use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assertNotNull;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for bovigo\vfs\vfsStreamDirectory.

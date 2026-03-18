@@ -11,17 +11,20 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests\visitor;
 
+use function bovigo\assert\expect;
+
 use bovigo\callmap\NewInstance;
+
+use function bovigo\callmap\verify;
+
 use bovigo\vfs\vfsStreamBlock;
 use bovigo\vfs\vfsStreamContent;
 use bovigo\vfs\vfsStreamDirectory;
 use bovigo\vfs\vfsStreamFile;
 use bovigo\vfs\visitor\vfsStreamAbstractVisitor;
+
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-
-use function bovigo\assert\expect;
-use function bovigo\callmap\verify;
 
 /**
  * Test for bovigo\vfs\visitor\vfsStreamAbstractVisitor.

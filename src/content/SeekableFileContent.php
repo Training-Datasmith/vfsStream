@@ -12,12 +12,14 @@ declare(strict_types=1);
 namespace bovigo\vfs\content;
 
 use function class_alias;
-use function strlen;
-use function substr;
 
 use const SEEK_CUR;
 use const SEEK_END;
+
 use const SEEK_SET;
+
+use function strlen;
+use function substr;
 
 /**
  * Default implementation for file contents based on simple strings.

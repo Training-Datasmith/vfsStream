@@ -11,11 +11,13 @@ declare(strict_types=1);
 
 namespace bovigo\vfs;
 
-use Iterator;
-
 use function array_values;
+
 use function class_alias;
 use function count;
+
+use Iterator;
+
 use function strlen;
 use function substr;
 use function time;

@@ -11,19 +11,22 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamDirectory;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
+
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+use bovigo\vfs\vfsStreamDirectory;
+
 use function fclose;
 use function file_put_contents;
 use function fopen;
 use function ftruncate;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for quota related functionality of bovigo\vfs\vfsStreamWrapper.

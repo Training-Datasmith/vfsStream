@@ -11,23 +11,28 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\content\LargeFileContent;
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamFile;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\content\LargeFileContent;
+use bovigo\vfs\vfsStream;
+
+use bovigo\vfs\vfsStreamFile;
+
 use function fclose;
 use function filesize;
 use function fopen;
 use function fread;
 use function fseek;
 use function fwrite;
-use function str_repeat;
 
 use const PHP_INT_MAX;
+
+use PHPUnit\Framework\TestCase;
+
 use const SEEK_SET;
+
+use function str_repeat;
 
 /**
  * Test for large file mocks.

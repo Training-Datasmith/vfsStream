@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * This file is part of vfsStream.
  *
@@ -7,8 +9,11 @@
  *
  * @package  bovigo\vfs
  */
+
 namespace bovigo\vfs\example;
+
 use bovigo\vfs\vfsStream;
+
 require_once 'FilePermissionsExample.php';
 /**
  * Test for FilePermissionsExample.
@@ -22,8 +27,9 @@ class FilePermissionsExampleTestCase extends \PHPUnit_Framework_TestCase
     {
         vfsStream::setup('exampleDir');
         $example = new FilePermissionsExample();
-        $example->writeConfig(array('foo' => 'bar'),
-                              vfsStream::url('exampleDir/writable.ini')
+        $example->writeConfig(
+            ['foo' => 'bar'],
+            vfsStream::url('exampleDir/writable.ini')
         );
 
         // assertions here
@@ -36,9 +42,9 @@ class FilePermissionsExampleTestCase extends \PHPUnit_Framework_TestCase
     {
         vfsStream::setup('exampleDir', 0444);
         $example = new FilePermissionsExample();
-        $example->writeConfig(array('foo' => 'bar'),
-                              vfsStream::url('exampleDir/notWritable.ini')
+        $example->writeConfig(
+            ['foo' => 'bar'],
+            vfsStream::url('exampleDir/notWritable.ini')
         );
     }
 }
-?>

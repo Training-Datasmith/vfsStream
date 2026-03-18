@@ -11,19 +11,24 @@ declare(strict_types=1);
 
 namespace bovigo\vfs;
 
+use function array_map;
+
 use bovigo\vfs\content\FileContent;
 use bovigo\vfs\content\LargeFileContent;
 use bovigo\vfs\visitor\vfsStreamVisitor;
-use DirectoryIterator;
-use InvalidArgumentException;
 
-use function array_map;
 use function class_alias;
+
+use DirectoryIterator;
+
 use function explode;
 use function file_get_contents;
 use function filetype;
 use function function_exists;
 use function implode;
+
+use InvalidArgumentException;
+
 use function is_array;
 use function is_string;
 use function octdec;

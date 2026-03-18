@@ -11,11 +11,9 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamWrapper;
-
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertNotNull;
+
 use function bovigo\assert\assertNull;
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
@@ -23,7 +21,14 @@ use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isExistingDirectory;
 use function bovigo\assert\predicate\isSameAs;
+
+use bovigo\vfs\vfsStream;
+use bovigo\vfs\vfsStreamWrapper;
+
 use function dir;
+
+use const E_USER_WARNING;
+
 use function file_exists;
 use function file_get_contents;
 use function is_dir;
@@ -31,9 +36,8 @@ use function mkdir;
 use function opendir;
 use function rmdir;
 use function stat;
-use function unlink;
 
-use const E_USER_WARNING;
+use function unlink;
 
 /**
  * Test for bovigo\vfs\vfsStreamWrapper around mkdir().

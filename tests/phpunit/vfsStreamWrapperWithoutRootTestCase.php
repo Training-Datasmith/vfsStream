@@ -11,13 +11,16 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
+use function bovigo\assert\assertFalse;
+
 use bovigo\vfs\vfsStream;
 use bovigo\vfs\vfsStreamWrapper;
-use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assertFalse;
 use function dir;
 use function fopen;
+
+use PHPUnit\Framework\TestCase;
+
 use function rename;
 use function unlink;
 

@@ -11,14 +11,19 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-
 use function bovigo\assert\assertEmptyString;
+
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+
+use const E_USER_WARNING;
+use const E_WARNING;
+
 use function fclose;
 use function feof;
 use function fileatime;
@@ -32,14 +37,15 @@ use function fstat;
 use function ftell;
 use function ftruncate;
 use function fwrite;
+
+use const LOCK_SH;
+
 use function rand;
+
+use const SEEK_SET;
+
 use function time;
 use function uniqid;
-
-use const E_USER_WARNING;
-use const E_WARNING;
-use const LOCK_SH;
-use const SEEK_SET;
 
 /**
  * Test for bovigo\vfs\vfsStreamWrapper.

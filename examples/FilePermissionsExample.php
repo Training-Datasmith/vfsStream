@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * This file is part of vfsStream.
  *
@@ -7,7 +9,9 @@
  *
  * @package  bovigo\vfs
  */
+
 namespace bovigo\vfs\example;
+
 /**
  * Example showing correct file permission support introduced with 0.7.0.
  */
@@ -26,4 +30,3 @@ class FilePermissionsExample
 
     // more methods here
 }
-?>

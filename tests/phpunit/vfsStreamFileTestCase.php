@@ -11,9 +11,17 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
+use function bovigo\assert\assertEmptyString;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
+use function bovigo\assert\expect;
+use function bovigo\assert\predicate\equals;
+
 use bovigo\callmap\NewInstance;
 use bovigo\vfs\content\FileContent;
 use bovigo\vfs\content\StringBasedFileContent;
+
 use bovigo\vfs\vfsStream;
 use bovigo\vfs\vfsStreamContent;
 use bovigo\vfs\vfsStreamException;
@@ -21,17 +29,12 @@ use bovigo\vfs\vfsStreamFile;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assertEmptyString;
-use function bovigo\assert\assertFalse;
-use function bovigo\assert\assertThat;
-use function bovigo\assert\assertTrue;
-use function bovigo\assert\expect;
-use function bovigo\assert\predicate\equals;
-use function uniqid;
-
 use const SEEK_CUR;
+
 use const SEEK_END;
 use const SEEK_SET;
+
+use function uniqid;
 
 /**
  * Test for bovigo\vfs\vfsStreamFile.

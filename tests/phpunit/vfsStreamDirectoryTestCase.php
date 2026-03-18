@@ -11,21 +11,22 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\callmap\NewInstance;
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamContent;
-use bovigo\vfs\vfsStreamDirectory;
-use bovigo\vfs\vfsStreamException;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertEmptyArray;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertNull;
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
+
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isSameAs;
+
+use bovigo\callmap\NewInstance;
+use bovigo\vfs\vfsStream;
+use bovigo\vfs\vfsStreamContent;
+use bovigo\vfs\vfsStreamDirectory;
+use bovigo\vfs\vfsStreamException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for bovigo\vfs\vfsStreamDirectory.

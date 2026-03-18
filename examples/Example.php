@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * This file is part of vfsStream.
  *
@@ -7,7 +9,9 @@
  *
  * @package  bovigo\vfs
  */
+
 namespace bovigo\vfs\example;
+
 /**
  * Example class.
  */
@@ -51,4 +55,3 @@ class Example
 
     // more source code here...
 }
-?>

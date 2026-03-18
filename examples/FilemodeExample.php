@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * This file is part of vfsStream.
  *
@@ -7,7 +9,9 @@
  *
  * @package  bovigo\vfs
  */
+
 namespace bovigo\vfs\example;
+
 /**
  * Example class.
  */
@@ -38,7 +42,7 @@ class FilemodeExample
      * @param  string  $id
      * @param  int     $fileMode  optional
      */
-    public function __construct($id,  $fileMode = 0700)
+    public function __construct($id, $fileMode = 0700)
     {
         $this->id       = $id;
         $this->fileMode = $fileMode;
@@ -59,4 +63,3 @@ class FilemodeExample
 
     // more source code here...
 }
-?>

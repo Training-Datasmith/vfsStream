@@ -11,14 +11,15 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamDirectory;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\predicate\isInstanceOf;
+
 use function bovigo\assert\predicate\isOfSize;
+
+use bovigo\vfs\vfsStream;
+use bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for bovigo\vfs\vfsStreamDirectory.

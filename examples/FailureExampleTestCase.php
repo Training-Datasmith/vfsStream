@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * This file is part of vfsStream.
  *
@@ -7,8 +9,11 @@
  *
  * @package  bovigo\vfs
  */
+
 namespace bovigo\vfs\example;
+
 use bovigo\vfs\vfsStream;
+
 require_once 'FailureExample.php';
 /**
  * Test case for class FailureExample.
@@ -55,4 +60,3 @@ class FailureExampleTestCase extends \PHPUnit_Framework_TestCase
         $this->assertSame('notoverwritten', $this->root->getChild('test.txt')->getContent());
     }
 }
-?>

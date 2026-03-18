@@ -12,9 +12,10 @@ declare(strict_types=1);
 namespace bovigo\vfs;
 
 use ArrayIterator;
-use Iterator;
 
 use function class_alias;
+
+use Iterator;
 
 /**
  * Directory container.

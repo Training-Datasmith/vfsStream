@@ -11,16 +11,19 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use PHPUnit\Framework\TestCase;
-use ZipArchive;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
+
 use function bovigo\assert\predicate\equals;
 
+use bovigo\vfs\vfsStream;
+
 use const DIRECTORY_SEPARATOR;
+
+use PHPUnit\Framework\TestCase;
+
+use ZipArchive;
 
 /**
  * Test for bovigo\vfs\vfsStreamWrapper in conjunction with ext/zip.

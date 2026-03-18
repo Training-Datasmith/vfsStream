@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * This file is part of vfsStream.
  *
@@ -7,8 +9,11 @@
  *
  * @package  bovigo\vfs
  */
+
 namespace bovigo\vfs\example;
+
 use bovigo\vfs\vfsStream;
+
 require_once 'Example.php';
 /**
  * Test case for class Example.
@@ -44,4 +49,3 @@ class ExampleTestCaseWithVfsStream extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->root->hasChild('id'));
     }
 }
-?>

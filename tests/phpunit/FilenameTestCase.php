@@ -11,18 +11,21 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use PHPUnit\Framework\TestCase;
-use RecursiveDirectoryIterator;
-use UnexpectedValueException;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\contains;
 use function bovigo\assert\predicate\equals;
-use function mkdir;
+
+use bovigo\vfs\vfsStream;
 
 use const DIRECTORY_SEPARATOR;
+
+use function mkdir;
+
+use PHPUnit\Framework\TestCase;
+use RecursiveDirectoryIterator;
+
+use UnexpectedValueException;
 
 /**
  * Test for directory iteration.

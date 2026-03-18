@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace bovigo\vfs;
 
-use Exception;
-
 use function class_alias;
+
+use Exception;
 
 /**
  * Exception for vfsStream errors.

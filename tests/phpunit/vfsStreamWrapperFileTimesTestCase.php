@@ -11,12 +11,13 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamDirectory;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+
+use bovigo\vfs\vfsStreamDirectory;
+
 use function fclose;
 use function file_get_contents;
 use function file_put_contents;
@@ -26,6 +27,9 @@ use function filemtime;
 use function fopen;
 use function fread;
 use function fwrite;
+
+use PHPUnit\Framework\TestCase;
+
 use function rename;
 use function sleep;
 use function time;

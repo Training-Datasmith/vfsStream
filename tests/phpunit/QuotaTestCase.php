@@ -11,13 +11,14 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\Quota;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
+
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\Quota;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for bovigo\vfs\Quota.

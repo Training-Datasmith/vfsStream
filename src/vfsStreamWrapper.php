@@ -17,12 +17,33 @@ use function array_values;
 use function class_alias;
 use function clearstatcache;
 use function count;
+
+use const E_USER_WARNING;
+
 use function explode;
 use function implode;
 use function in_array;
+
+use const LOCK_NB;
+use const LOCK_UN;
+
 use function spl_object_id;
 use function str_replace;
 use function stream_get_wrappers;
+
+use const STREAM_META_ACCESS;
+use const STREAM_META_GROUP;
+use const STREAM_META_GROUP_NAME;
+use const STREAM_META_OWNER;
+use const STREAM_META_OWNER_NAME;
+use const STREAM_META_TOUCH;
+
+use const STREAM_OPTION_BLOCKING;
+use const STREAM_OPTION_READ_TIMEOUT;
+use const STREAM_OPTION_WRITE_BUFFER;
+use const STREAM_REPORT_ERRORS;
+use const STREAM_URL_STAT_QUIET;
+
 use function stream_wrapper_register;
 use function stream_wrapper_unregister;
 use function strlen;
@@ -32,21 +53,6 @@ use function strstr;
 use function substr;
 use function time;
 use function trigger_error;
-
-use const E_USER_WARNING;
-use const LOCK_NB;
-use const LOCK_UN;
-use const STREAM_META_ACCESS;
-use const STREAM_META_GROUP;
-use const STREAM_META_GROUP_NAME;
-use const STREAM_META_OWNER;
-use const STREAM_META_OWNER_NAME;
-use const STREAM_META_TOUCH;
-use const STREAM_OPTION_BLOCKING;
-use const STREAM_OPTION_READ_TIMEOUT;
-use const STREAM_OPTION_WRITE_BUFFER;
-use const STREAM_REPORT_ERRORS;
-use const STREAM_URL_STAT_QUIET;
 
 /**
  * Stream wrapper to mock file system requests.

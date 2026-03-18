@@ -11,11 +11,13 @@ declare(strict_types=1);
 
 namespace bovigo\vfs;
 
-use Iterator;
-
 use function array_unshift;
+
 use function class_alias;
 use function current;
+
+use Iterator;
+
 use function next;
 use function reset;
 

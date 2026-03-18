@@ -11,16 +11,19 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests\content;
 
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
+
+use function bovigo\assert\predicate\equals;
+
 use bovigo\vfs\content\LargeFileContent;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assertThat;
-use function bovigo\assert\assertTrue;
-use function bovigo\assert\predicate\equals;
-use function str_repeat;
-
 use const SEEK_END;
+
 use const SEEK_SET;
+
+use function str_repeat;
 
 /**
  * Test for bovigo\vfs\content\LargeFileContent.

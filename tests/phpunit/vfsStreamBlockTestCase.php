@@ -11,18 +11,20 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use bovigo\vfs\vfsStreamBlock;
-use bovigo\vfs\vfsStreamContent;
-use bovigo\vfs\vfsStreamException;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+use bovigo\vfs\vfsStreamBlock;
+use bovigo\vfs\vfsStreamContent;
+use bovigo\vfs\vfsStreamException;
+
 use function filetype;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for bovigo\vfs\vfsStreamBlock.

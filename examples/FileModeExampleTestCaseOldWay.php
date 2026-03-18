@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * This file is part of vfsStream.
  *
@@ -7,7 +9,9 @@
  *
  * @package  bovigo\vfs
  */
+
 namespace bovigo\vfs\example;
+
 require_once 'FilemodeExample.php';
 /**
  * Test case for class FilemodeExample.
@@ -64,4 +68,3 @@ class FilemodeExampleTestCaseOldWay extends \PHPUnit_Framework_TestCase
         }
     }
 }
-?>

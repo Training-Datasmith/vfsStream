@@ -11,24 +11,30 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
+use function bovigo\assert\assertThat;
+use function bovigo\assert\predicate\equals;
+use function bovigo\assert\predicate\isSameAs;
+
 use bovigo\callmap\NewInstance;
+
+use function bovigo\callmap\verify;
+
 use bovigo\vfs\content\StringBasedFileContent;
+
 use bovigo\vfs\OpenedFile;
 use bovigo\vfs\vfsStreamFile;
 use bovigo\vfs\vfsStreamWrapper;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assertThat;
-use function bovigo\assert\predicate\equals;
-use function bovigo\assert\predicate\isSameAs;
-use function bovigo\callmap\verify;
 use function rand;
-use function strlen;
-use function uniqid;
 
 use const SEEK_CUR;
 use const SEEK_END;
+
 use const SEEK_SET;
+
+use function strlen;
+use function uniqid;
 
 /**
  * Test for bovigo\vfs\OpenedFile.

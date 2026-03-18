@@ -11,13 +11,15 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+
 use function file_put_contents;
 use function mkdir;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for umask settings.

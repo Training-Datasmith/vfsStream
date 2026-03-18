@@ -11,14 +11,17 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertEmpty;
+
+use bovigo\vfs\vfsStream;
+
 use function glob;
-use function mkdir;
 
 use const GLOB_MARK;
+
+use function mkdir;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for bovigo\vfs\vfsStream.

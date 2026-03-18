@@ -11,14 +11,16 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-use DOMDocument;
-use PHPUnit\Framework\TestCase;
-
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+use DOMDocument;
+
 use function file_get_contents;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group  issue_104

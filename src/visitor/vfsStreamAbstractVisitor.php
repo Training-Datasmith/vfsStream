@@ -15,9 +15,10 @@ use bovigo\vfs\vfsStreamBlock;
 use bovigo\vfs\vfsStreamContent;
 use bovigo\vfs\vfsStreamDirectory;
 use bovigo\vfs\vfsStreamFile;
-use InvalidArgumentException;
 
 use function class_alias;
+
+use InvalidArgumentException;
 
 /**
  * Abstract base class providing an implementation for the visit() method.

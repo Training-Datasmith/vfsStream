@@ -11,13 +11,15 @@ declare(strict_types=1);
 
 namespace bovigo\vfs\tests;
 
-use bovigo\vfs\vfsStream;
-
 use function bovigo\assert\assertEmptyString;
+
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\predicate\equals;
+
+use bovigo\vfs\vfsStream;
+
 use function fclose;
 use function feof;
 use function file_get_contents;
@@ -29,11 +31,13 @@ use function ftell;
 use function fwrite;
 use function is_file;
 use function rename;
-use function unlink;
 
 use const SEEK_CUR;
+
 use const SEEK_END;
 use const SEEK_SET;
+
+use function unlink;
 
 /**
  * Test for bovigo\vfs\vfsStreamWrapper.

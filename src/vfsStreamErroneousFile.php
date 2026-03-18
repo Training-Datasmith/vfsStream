@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace bovigo\vfs;
 
-use function trigger_error;
-
 use const E_USER_WARNING;
+
+use function trigger_error;
 
 /**
  * File to trigger errors on specific actions.
