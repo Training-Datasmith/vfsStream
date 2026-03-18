@@ -588,8 +588,10 @@ class vfsStreamWrapper
                 return true;
 
             case STREAM_META_OWNER_NAME:
-                return false;
 
+            case STREAM_META_GROUP_NAME:
+            default:
+                return false;
             case STREAM_META_OWNER:
                 if ($content === null) {
                     return false;
@@ -602,9 +604,6 @@ class vfsStreamWrapper
                         $content->chown($var);
                     }
                 );
-
-            case STREAM_META_GROUP_NAME:
-                return false;
 
             case STREAM_META_GROUP:
                 if ($content === null) {
@@ -631,9 +630,6 @@ class vfsStreamWrapper
                         $content->chmod($var);
                     }
                 );
-
-            default:
-                return false;
         }
     }
 

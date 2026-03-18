@@ -365,7 +365,10 @@ class vfsStreamFile extends vfsStreamAbstractContent
      */
     public function isLocked($resource = null): bool
     {
-        return $this->hasSharedLock($resource) || $this->hasExclusiveLock($resource);
+        if ($this->hasSharedLock($resource)) {
+            return true;
+        }
+        return $this->hasExclusiveLock($resource);
     }
 
     /**

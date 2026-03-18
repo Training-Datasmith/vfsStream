@@ -139,7 +139,7 @@ class LargeFileContent extends SeekableFileContent implements FileContent
         foreach (
             array_filter(
                 array_keys($this->content),
-                static function ($pos) use ($size) {
+                static function ($pos) use ($size): bool {
                                     return $pos >= $size;
                 }
             ) as $removePos
