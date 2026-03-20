@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of vfsStream.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace bovigo\vfs;
 
 use function class_alias;
@@ -17,11 +15,10 @@ use function strlen;
 use function strncmp;
 use function strstr;
 use function time;
-
 /**
  * Base stream contents container.
  */
-abstract class vfsStreamAbstractContent implements vfsStreamContent
+abstract class Vfs_Stream_Abstract_Content implements Vfs_Stream_Content
 {
     /**
      * name of the container
@@ -40,19 +37,19 @@ abstract class vfsStreamAbstractContent implements vfsStreamContent
      *
      * @var  int
      */
-    protected $lastAccessed;
+    protected $last_accessed;
     /**
      * timestamp of last attribute modification
      *
      * @var  int
      */
-    protected $lastAttributeModified;
+    protected $last_attribute_modified;
     /**
      * timestamp of last modification
      *
      * @var  int
      */
-    protected $lastModified;
+    protected $last_modified;
     /**
      * permissions for content
      *
@@ -76,8 +73,7 @@ abstract class vfsStreamAbstractContent implements vfsStreamContent
      *
      * @var  string|null
      */
-    private $parentPath;
-
+    private $parent_path;
     /**
      * constructor
      *
@@ -86,102 +82,86 @@ abstract class vfsStreamAbstractContent implements vfsStreamContent
     public function __construct(string $name, ?int $permissions = null)
     {
         if (strstr($name, '/') !== false) {
-            throw new vfsStreamException('Name can not contain /.');
+            throw new Vfs_Stream_Exception('Name can not contain /.');
         }
-
         $this->name = $name;
         $time = time();
         if ($permissions === null) {
-            $permissions = $this->getDefaultPermissions() & ~vfsStream::umask();
+            $permissions = $this->get_default_permissions() & ~Vfs_Stream::umask();
         }
-
-        $this->lastAccessed = $time;
-        $this->lastAttributeModified = $time;
-        $this->lastModified = $time;
+        $this->last_accessed = $time;
+        $this->last_attribute_modified = $time;
+        $this->last_modified = $time;
         $this->permissions = $permissions;
-        $this->user = vfsStream::getCurrentUser();
-        $this->group = vfsStream::getCurrentGroup();
+        $this->user = Vfs_Stream::get_current_user();
+        $this->group = Vfs_Stream::get_current_group();
     }
-
     /**
      * returns default permissions for concrete implementation
      *
      * @since   0.8.0
      */
-    abstract protected function getDefaultPermissions(): int;
-
+    abstract protected function get_default_permissions(): int;
     /**
      * returns the file name of the content
      */
-    public function getName(): string
+    public function get_name(): string
     {
         return $this->name;
     }
-
     /**
      * renames the content
      */
-    public function rename(string $newName): void
+    public function rename(string $new_name): void
     {
-        if (strstr($newName, '/') !== false) {
-            throw new vfsStreamException('Name can not contain /.');
+        if (strstr($new_name, '/') !== false) {
+            throw new Vfs_Stream_Exception('Name can not contain /.');
         }
-
-        $this->name = $newName;
+        $this->name = $new_name;
     }
-
     /**
      * checks whether the container can be applied to given name
      */
-    public function appliesTo(string $name): bool
+    public function applies_to(string $name): bool
     {
         if ($name === $this->name) {
             return true;
         }
-
         $segment_name = $this->name . '/';
-
         return strncmp($segment_name, $name, strlen($segment_name)) === 0;
     }
-
     /**
      * returns the type of the container
      */
-    public function getType(): int
+    public function get_type(): int
     {
         return $this->type;
     }
-
     /**
      * sets the last modification time of the stream content
      */
-    public function lastModified(int $filemtime): vfsStreamContent
+    public function last_modified(int $filemtime): Vfs_Stream_Content
     {
-        $this->lastModified = $filemtime;
-
+        $this->last_modified = $filemtime;
         return $this;
     }
-
     /**
      * returns the last modification time of the stream content
      */
     public function filemtime(): int
     {
-        return $this->lastModified;
+        return $this->last_modified;
     }
-
     /**
      * sets last access time of the stream content
      *
      * @since   0.9
      */
-    public function lastAccessed(int $fileatime): vfsStreamContent
+    public function last_accessed(int $fileatime): Vfs_Stream_Content
     {
-        $this->lastAccessed = $fileatime;
-
+        $this->last_accessed = $fileatime;
         return $this;
     }
-
     /**
      * returns the last access time of the stream content
      *
@@ -189,21 +169,18 @@ abstract class vfsStreamAbstractContent implements vfsStreamContent
      */
     public function fileatime(): int
     {
-        return $this->lastAccessed;
+        return $this->last_accessed;
     }
-
     /**
      * sets the last attribute modification time of the stream content
      *
      * @since   0.9
      */
-    public function lastAttributeModified(int $filectime): vfsStreamContent
+    public function last_attribute_modified(int $filectime): Vfs_Stream_Content
     {
-        $this->lastAttributeModified = $filectime;
-
+        $this->last_attribute_modified = $filectime;
         return $this;
     }
-
     /**
      * returns the last attribute modification time of the stream content
      *
@@ -211,150 +188,130 @@ abstract class vfsStreamAbstractContent implements vfsStreamContent
      */
     public function filectime(): int
     {
-        return $this->lastAttributeModified;
+        return $this->last_attribute_modified;
     }
-
     /**
      * adds content to given container
      */
-    public function at(vfsStreamContainer $container): vfsStreamContent
+    public function at(Vfs_Stream_Container $container): Vfs_Stream_Content
     {
-        $container->addChild($this);
-
+        $container->add_child($this);
         return $this;
     }
-
     /**
      * change file mode to given permissions
      */
-    public function chmod(int $permissions): vfsStreamContent
+    public function chmod(int $permissions): Vfs_Stream_Content
     {
         $this->permissions = $permissions;
-        $this->lastAttributeModified = time();
+        $this->last_attribute_modified = time();
         clearstatcache();
-
         return $this;
     }
-
     /**
      * returns permissions
      */
-    public function getPermissions(): int
+    public function get_permissions(): int
     {
         return $this->permissions;
     }
-
     /**
      * checks whether content is readable
      *
      * @param   int $user  id of user to check for
      * @param   int $group id of group to check for
      */
-    public function isReadable(int $user, int $group): bool
+    public function is_readable(int $user, int $group): bool
     {
         if ($this->user === $user) {
             $check = 0400;
         } elseif ($this->group === $group) {
-            $check = 0040;
+            $check = 040;
         } else {
-            $check = 0004;
+            $check = 04;
         }
-
         return (bool) ($this->permissions & $check);
     }
-
     /**
      * checks whether content is writable
      *
      * @param   int $user  id of user to check for
      * @param   int $group id of group to check for
      */
-    public function isWritable(int $user, int $group): bool
+    public function is_writable(int $user, int $group): bool
     {
         if ($this->user === $user) {
             $check = 0200;
         } elseif ($this->group === $group) {
-            $check = 0020;
+            $check = 020;
         } else {
-            $check = 0002;
+            $check = 02;
         }
-
         return (bool) ($this->permissions & $check);
     }
-
     /**
      * checks whether content is executable
      *
      * @param   int $user  id of user to check for
      * @param   int $group id of group to check for
      */
-    public function isExecutable(int $user, int $group): bool
+    public function is_executable(int $user, int $group): bool
     {
         if ($this->user === $user) {
             $check = 0100;
         } elseif ($this->group === $group) {
-            $check = 0010;
+            $check = 010;
         } else {
-            $check = 0001;
+            $check = 01;
         }
-
         return (bool) ($this->permissions & $check);
     }
-
     /**
      * change owner of file to given user
      */
-    public function chown(int $user): vfsStreamContent
+    public function chown(int $user): Vfs_Stream_Content
     {
         $this->user = $user;
-        $this->lastAttributeModified = time();
-
+        $this->last_attribute_modified = time();
         return $this;
     }
-
     /**
      * checks whether file is owned by given user
      */
-    public function isOwnedByUser(int $user): bool
+    public function is_owned_by_user(int $user): bool
     {
         return $this->user === $user;
     }
-
     /**
      * returns owner of file
      */
-    public function getUser(): int
+    public function get_user(): int
     {
         return $this->user;
     }
-
     /**
      * change owner group of file to given group
      */
-    public function chgrp(int $group): vfsStreamContent
+    public function chgrp(int $group): Vfs_Stream_Content
     {
         $this->group = $group;
-        $this->lastAttributeModified = time();
-
+        $this->last_attribute_modified = time();
         return $this;
     }
-
     /**
      * checks whether file is owned by group
      */
-    public function isOwnedByGroup(int $group): bool
+    public function is_owned_by_group(int $group): bool
     {
         return $this->group === $group;
     }
-
     /**
      * returns owner group of file
      */
-    public function getGroup(): int
+    public function get_group(): int
     {
         return $this->group;
     }
-
     /**
      * sets parent path
      *
@@ -362,11 +319,10 @@ abstract class vfsStreamAbstractContent implements vfsStreamContent
      *
      * @since   1.2.0
      */
-    public function setParentPath(string $parentPath): void
+    public function set_parent_path(string $parent_path): void
     {
-        $this->parentPath = $parentPath;
+        $this->parent_path = $parent_path;
     }
-
     /**
      * removes parent path
      *
@@ -374,11 +330,10 @@ abstract class vfsStreamAbstractContent implements vfsStreamContent
      *
      * @since   2.0.0
      */
-    public function removeParentPath(): void
+    public function remove_parent_path(): void
     {
-        $this->parentPath = null;
+        $this->parent_path = null;
     }
-
     /**
      * returns path to this content
      *
@@ -386,13 +341,11 @@ abstract class vfsStreamAbstractContent implements vfsStreamContent
      */
     public function path(): string
     {
-        if ($this->parentPath === null) {
+        if ($this->parent_path === null) {
             return $this->name;
         }
-
-        return $this->parentPath . '/' . $this->name;
+        return $this->parent_path . '/' . $this->name;
     }
-
     /**
      * returns complete vfsStream url for this content
      *
@@ -400,8 +353,7 @@ abstract class vfsStreamAbstractContent implements vfsStreamContent
      */
     public function url(): string
     {
-        return vfsStream::url($this->path());
+        return Vfs_Stream::url($this->path());
     }
 }
-
 class_alias('bovigo\vfs\vfsStreamAbstractContent', 'org\bovigo\vfs\vfsStreamAbstractContent');

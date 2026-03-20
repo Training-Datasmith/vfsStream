@@ -1,25 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of vfsStream.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace bovigo\vfs\visitor;
 
-use bovigo\vfs\vfsStreamBlock;
-use bovigo\vfs\vfsStreamContent;
-use bovigo\vfs\vfsStreamDirectory;
-use bovigo\vfs\vfsStreamFile;
-
+use bovigo\vfs\Vfs_Stream_Block;
+use bovigo\vfs\Vfs_Stream_Content;
+use bovigo\vfs\Vfs_Stream_Directory;
+use bovigo\vfs\Vfs_Stream_File;
 use function class_alias;
-
 use InvalidArgumentException;
-
 /**
  * Abstract base class providing an implementation for the visit() method.
  *
@@ -27,39 +22,34 @@ use InvalidArgumentException;
  *
  * @since  0.10.0
  */
-abstract class vfsStreamAbstractVisitor implements vfsStreamVisitor
+abstract class Vfs_Stream_Abstract_Visitor implements Vfs_Stream_Visitor
 {
     /**
      * visit a content and process it
      *
      * @throws InvalidArgumentException
      */
-    public function visit(vfsStreamContent $content): vfsStreamVisitor
+    public function visit(Vfs_Stream_Content $content): Vfs_Stream_Visitor
     {
-        if ($content instanceof vfsStreamBlock) {
-            $this->visitBlockDevice($content);
-        } elseif ($content instanceof vfsStreamFile) {
-            $this->visitFile($content);
-        } elseif ($content instanceof vfsStreamDirectory) {
-            if (! $content->isDot()) {
-                $this->visitDirectory($content);
+        if ($content instanceof Vfs_Stream_Block) {
+            $this->visit_block_device($content);
+        } elseif ($content instanceof Vfs_Stream_File) {
+            $this->visit_file($content);
+        } elseif ($content instanceof Vfs_Stream_Directory) {
+            if (!$content->is_dot()) {
+                $this->visit_directory($content);
             }
         } else {
-            throw new InvalidArgumentException(
-                'Unknown content type ' . $content->getType() . ' for ' . $content->getName()
-            );
+            throw new InvalidArgumentException('Unknown content type ' . $content->get_type() . ' for ' . $content->get_name());
         }
-
         return $this;
     }
-
     /**
      * visit a block device and process it
      */
-    public function visitBlockDevice(vfsStreamBlock $block): vfsStreamVisitor
+    public function visit_block_device(Vfs_Stream_Block $block): Vfs_Stream_Visitor
     {
-        return $this->visitFile($block);
+        return $this->visit_file($block);
     }
 }
-
 class_alias('bovigo\vfs\visitor\vfsStreamAbstractVisitor', 'org\bovigo\vfs\visitor\vfsStreamAbstractVisitor');

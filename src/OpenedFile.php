@@ -1,18 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of vfsStream.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace bovigo\vfs;
 
 use const SEEK_SET;
-
 /**
  * Decorator for vfsStreamFile to allow multiple instances of a file to be open.
  *
@@ -21,24 +18,20 @@ use const SEEK_SET;
  *
  * @internal
  */
-final class OpenedFile
+final class Opened_File
 {
     /** @var vfsStreamFile */
     private $base;
-
     /** @var int */
     private $position = 0;
-
-    public function __construct(vfsStreamFile $base)
+    public function __construct(Vfs_Stream_File $base)
     {
         $this->base = $base;
     }
-
-    public function getBaseFile(): vfsStreamFile
+    public function get_base_file(): Vfs_Stream_File
     {
         return $this->base;
     }
-
     /**
      * simply open the file
      */
@@ -46,49 +39,42 @@ final class OpenedFile
     {
         $this->base->open();
     }
-
     /**
      * open file and set pointer to end of file
      */
-    public function openForAppend(): void
+    public function open_for_append(): void
     {
-        $this->base->openForAppend();
-        $this->savePosition();
+        $this->base->open_for_append();
+        $this->save_position();
     }
-
     /**
      * open file and truncate content
      */
-    public function openWithTruncate(): void
+    public function open_with_truncate(): void
     {
-        $this->base->openWithTruncate();
-        $this->savePosition();
+        $this->base->open_with_truncate();
+        $this->save_position();
     }
-
     /**
      * reads the given amount of bytes from content
      */
     public function read(int $count): string
     {
-        $this->restorePosition();
+        $this->restore_position();
         $data = $this->base->read($count);
-        $this->savePosition();
-
+        $this->save_position();
         return $data;
     }
-
     /**
      * returns the content until its end from current offset
      */
-    public function readUntilEnd(): string
+    public function read_until_end(): string
     {
-        $this->restorePosition();
-        $data = $this->base->readUntilEnd();
-        $this->savePosition();
-
+        $this->restore_position();
+        $data = $this->base->read_until_end();
+        $this->save_position();
         return $data;
     }
-
     /**
      * writes an amount of data
      *
@@ -96,13 +82,11 @@ final class OpenedFile
      */
     public function write(string $data): int
     {
-        $this->restorePosition();
+        $this->restore_position();
         $bytes = $this->base->write($data);
-        $this->savePosition();
-
+        $this->save_position();
         return $bytes;
     }
-
     /**
      * Truncates a file to a given length
      *
@@ -110,48 +94,38 @@ final class OpenedFile
      */
     public function truncate(int $size): bool
     {
-        $this->restorePosition();
-
+        $this->restore_position();
         return $this->base->truncate($size);
     }
-
     /**
      * checks whether pointer is at end of file
      */
     public function eof(): bool
     {
-        $this->restorePosition();
-
+        $this->restore_position();
         return $this->base->eof();
     }
-
     /**
      * returns the current position within the file
      */
-    public function getBytesRead(): int
+    public function get_bytes_read(): int
     {
-        $this->restorePosition();
-
-        $this->position = $this->base->getBytesRead();
-
+        $this->restore_position();
+        $this->position = $this->base->get_bytes_read();
         return $this->position;
     }
-
     /**
      * seeks to the given offset
      */
     public function seek(int $offset, int $whence): bool
     {
         if ($whence !== SEEK_SET) {
-            $this->restorePosition();
+            $this->restore_position();
         }
-
         $success = $this->base->seek($offset, $whence);
-        $this->savePosition();
-
+        $this->save_position();
         return $success;
     }
-
     /**
      * returns size of content
      */
@@ -159,7 +133,6 @@ final class OpenedFile
     {
         return $this->base->size();
     }
-
     /**
      * locks file
      *
@@ -169,15 +142,13 @@ final class OpenedFile
     {
         return $this->base->lock($resource, $operation);
     }
-
     /**
      * returns the type of the container
      */
-    public function getType(): int
+    public function get_type(): int
     {
-        return $this->base->getType();
+        return $this->base->get_type();
     }
-
     /**
      * returns the last modification time of the stream content
      */
@@ -185,7 +156,6 @@ final class OpenedFile
     {
         return $this->base->filemtime();
     }
-
     /**
      * returns the last access time of the stream content
      */
@@ -193,7 +163,6 @@ final class OpenedFile
     {
         return $this->base->fileatime();
     }
-
     /**
      * returns the last attribute modification time of the stream content
      */
@@ -201,71 +170,63 @@ final class OpenedFile
     {
         return $this->base->filectime();
     }
-
     /**
      * returns permissions
      */
-    public function getPermissions(): int
+    public function get_permissions(): int
     {
-        return $this->base->getPermissions();
+        return $this->base->get_permissions();
     }
-
     /**
      * checks whether content is readable
      *
      * @param   int $user  id of user to check for
      * @param   int $group id of group to check for
      */
-    public function isReadable(int $user, int $group): bool
+    public function is_readable(int $user, int $group): bool
     {
-        return $this->base->isReadable($user, $group);
+        return $this->base->is_readable($user, $group);
     }
-
     /**
      * checks whether content is writable
      *
      * @param   int $user  id of user to check for
      * @param   int $group id of group to check for
      */
-    public function isWritable(int $user, int $group): bool
+    public function is_writable(int $user, int $group): bool
     {
-        return $this->base->isWritable($user, $group);
+        return $this->base->is_writable($user, $group);
     }
-
     /**
      * checks whether content is executable
      *
      * @param   int $user  id of user to check for
      * @param   int $group id of group to check for
      */
-    public function isExecutable(int $user, int $group): bool
+    public function is_executable(int $user, int $group): bool
     {
-        return $this->base->isExecutable($user, $group);
+        return $this->base->is_executable($user, $group);
     }
-
     /**
      * returns owner of file
      */
-    public function getUser(): int
+    public function get_user(): int
     {
-        return $this->base->getUser();
+        return $this->base->get_user();
     }
-
     /**
      * returns owner group of file
      */
-    public function getGroup(): int
+    public function get_group(): int
     {
-        return $this->base->getGroup();
+        return $this->base->get_group();
     }
-
-    private function restorePosition(): void
+    private function restore_position(): void
     {
-        $this->base->getContentObject()->seek($this->position, SEEK_SET);
+        $this->base->get_content_object()->seek($this->position, SEEK_SET);
     }
-
-    private function savePosition(): void
+    private function save_position(): void
     {
-        $this->position = $this->base->getContentObject()->bytesRead();
+        $this->position = $this->base->get_content_object()->bytes_read();
     }
 }

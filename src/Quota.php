@@ -1,18 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of vfsStream.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace bovigo\vfs;
 
 use function class_alias;
-
 /**
  * Represents a quota for disk space.
  *
@@ -34,7 +31,6 @@ class Quota
      * @var  int
      */
     private $amount;
-
     /**
      * constructor
      *
@@ -44,7 +40,6 @@ class Quota
     {
         $this->amount = $amount;
     }
-
     /**
      * create with unlimited space
      */
@@ -52,35 +47,29 @@ class Quota
     {
         return new self(self::UNLIMITED);
     }
-
     /**
      * checks if a quota is set
      */
-    public function isLimited(): bool
+    public function is_limited(): bool
     {
         return self::UNLIMITED < $this->amount;
     }
-
     /**
      * checks if given used space exceeda quota limit
      */
-    public function spaceLeft(int $usedSpace): int
+    public function space_left(int $used_space): int
     {
         if ($this->amount === self::UNLIMITED) {
-            return $usedSpace;
+            return $used_space;
         }
-
-        if ($usedSpace >= $this->amount) {
+        if ($used_space >= $this->amount) {
             return 0;
         }
-
-        $spaceLeft = $this->amount - $usedSpace;
-        if (0 >= $spaceLeft) {
+        $space_left = $this->amount - $used_space;
+        if (0 >= $space_left) {
             return 0;
         }
-
-        return $spaceLeft;
+        return $space_left;
     }
 }
-
 class_alias('bovigo\vfs\Quota', 'org\bovigo\vfs\Quota');

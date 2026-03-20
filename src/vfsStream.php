@@ -1,34 +1,26 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of vfsStream.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace bovigo\vfs;
 
 use function array_map;
-
-use bovigo\vfs\content\FileContent;
-use bovigo\vfs\content\LargeFileContent;
-use bovigo\vfs\visitor\vfsStreamVisitor;
-
+use bovigo\vfs\content\File_Content;
+use bovigo\vfs\content\Large_File_Content;
+use bovigo\vfs\visitor\Vfs_Stream_Visitor;
 use function class_alias;
-
-use DirectoryIterator;
-
+use Directory_Iterator;
 use function explode;
 use function file_get_contents;
 use function filetype;
 use function function_exists;
 use function implode;
-
 use InvalidArgumentException;
-
 use function is_array;
 use function is_string;
 use function octdec;
@@ -42,13 +34,12 @@ use function strlen;
 use function strpos;
 use function substr;
 use function trim;
-
 /**
  * Some utility methods for vfsStream.
  *
  * @api
  */
-class vfsStream
+class Vfs_Stream
 {
     /**
      * url scheme
@@ -83,14 +74,13 @@ class vfsStream
      *
      * @var  int
      */
-    protected static $umask = 0000;
+    protected static $umask = 00;
     /**
      * switch whether dotfiles are enabled in directory listings
      *
      * @var  bool
      */
-    private static $dotFiles = true;
-
+    private static $dot_files = true;
     /**
      * prepends the scheme to the given URL
      *
@@ -98,18 +88,12 @@ class vfsStream
      */
     public static function url(string $path): string
     {
-        return self::SCHEME . '://' . implode(
-            '/',
-            array_map(
-                'rawurlencode',    // ensure single path parts are correctly urlencoded
-                explode(
-                    '/',
-                    str_replace('\\', '/', $path)  // ensure correct directory separator
-                )
-            )
-        );
+        return self::SCHEME . '://' . implode('/', array_map(
+            'rawurlencode',
+            // ensure single path parts are correctly urlencoded
+            explode('/', str_replace('\\', '/', $path))
+        ));
     }
-
     /**
      * restores the path from the url
      *
@@ -118,15 +102,13 @@ class vfsStream
     public static function path(string $url): string
     {
         // remove line feeds and trailing whitespaces and path separators
-        $path = trim($url, " \t\r\n\0\x0B/\\");
+        $path = trim($url, " \t\r\n\x00\v/\\");
         $path = substr($path, strlen(self::SCHEME . '://'));
         $path = str_replace('\\', '/', $path);
         // replace double slashes with single slashes
         $path = str_replace('//', '/', $path);
-
         return rawurldecode($path);
     }
-
     /**
      * sets new umask setting and returns previous umask setting
      *
@@ -138,14 +120,12 @@ class vfsStream
      */
     public static function umask(?int $umask = null): int
     {
-        $oldUmask = self::$umask;
+        $old_umask = self::$umask;
         if ($umask !== null) {
             self::$umask = $umask;
         }
-
-        return $oldUmask;
+        return $old_umask;
     }
-
     /**
      * helper method for setting up vfsStream in unit tests
      *
@@ -196,16 +176,11 @@ class vfsStream
      *
      * @since   0.7.0
      */
-    public static function setup(
-        string $rootDirName = 'root',
-        ?int $permissions = null,
-        array $structure = []
-    ): vfsStreamDirectory {
-        vfsStreamWrapper::register();
-
-        return self::create($structure, vfsStreamWrapper::setRoot(self::newDirectory($rootDirName, $permissions)));
+    public static function setup(string $root_dir_name = 'root', ?int $permissions = null, array $structure = []): Vfs_Stream_Directory
+    {
+        Vfs_Stream_Wrapper::register();
+        return self::create($structure, Vfs_Stream_Wrapper::set_root(self::new_directory($root_dir_name, $permissions)));
     }
-
     /**
      * creates vfsStream directory structure from an array and adds it to given base dir
      *
@@ -252,49 +227,44 @@ class vfsStream
      *
      * @since   0.10.0
      */
-    public static function create(array $structure, ?vfsStreamDirectory $baseDir = null): vfsStreamDirectory
+    public static function create(array $structure, ?Vfs_Stream_Directory $base_dir = null): Vfs_Stream_Directory
     {
-        if ($baseDir === null) {
-            $baseDir = vfsStreamWrapper::getRoot();
+        if ($base_dir === null) {
+            $base_dir = Vfs_Stream_Wrapper::get_root();
         }
-
-        if ($baseDir === null) {
+        if ($base_dir === null) {
             throw new InvalidArgumentException('No baseDir given and no root directory set.');
         }
-
-        return self::addStructure($structure, $baseDir);
+        return self::add_structure($structure, $base_dir);
     }
-
     /**
      * helper method to create subdirectories recursively
      *
      * @param mixed[]            $structure subdirectory structure to add
      * @param vfsStreamDirectory $baseDir   directory to add the structure to
      */
-    protected static function addStructure(array $structure, vfsStreamDirectory $baseDir): vfsStreamDirectory
+    protected static function add_structure(array $structure, Vfs_Stream_Directory $base_dir): Vfs_Stream_Directory
     {
         foreach ($structure as $name => $data) {
             $name = (string) $name;
             if (is_array($data) === true) {
-                self::addStructure($data, self::newDirectory($name)->at($baseDir));
+                self::add_structure($data, self::new_directory($name)->at($base_dir));
             } elseif (is_string($data) === true) {
                 $matches = null;
                 preg_match('/^\[(.*)\]$/', $name, $matches);
                 if ($matches !== []) {
-                    self::newBlock($matches[1])->withContent($data)->at($baseDir);
+                    self::new_block($matches[1])->with_content($data)->at($base_dir);
                 } else {
-                    self::newFile($name)->withContent($data)->at($baseDir);
+                    self::new_file($name)->with_content($data)->at($base_dir);
                 }
-            } elseif ($data instanceof FileContent) {
-                self::newFile($name)->withContent($data)->at($baseDir);
-            } elseif ($data instanceof vfsStreamFile) {
-                $baseDir->addChild($data);
+            } elseif ($data instanceof File_Content) {
+                self::new_file($name)->with_content($data)->at($base_dir);
+            } elseif ($data instanceof Vfs_Stream_File) {
+                $base_dir->add_child($data);
             }
         }
-
-        return $baseDir;
+        return $base_dir;
     }
-
     /**
      * copies the file system structure from given path into the base dir
      *
@@ -317,75 +287,48 @@ class vfsStream
      *
      * @since   0.11.0
      */
-    public static function copyFromFileSystem(
-        string $path,
-        ?vfsStreamDirectory $baseDir = null,
-        int $maxFileSize = 1048576
-    ): vfsStreamDirectory {
-        if ($baseDir === null) {
+    public static function copy_from_file_system(string $path, ?Vfs_Stream_Directory $base_dir = null, int $max_file_size = 1048576): Vfs_Stream_Directory
+    {
+        if ($base_dir === null) {
             /** @var vfsStreamDirectory|null $baseDir **/
-            $baseDir = vfsStreamWrapper::getRoot();
+            $base_dir = Vfs_Stream_Wrapper::get_root();
         }
-
-        if ($baseDir === null) {
+        if ($base_dir === null) {
             throw new InvalidArgumentException('No baseDir given and no root directory set.');
         }
-
-        $dir = new DirectoryIterator($path);
+        $dir = new Directory_Iterator($path);
         foreach ($dir as $fileinfo) {
-            switch (filetype($fileinfo->getPathname())) {
+            switch (filetype($fileinfo->get_pathname())) {
                 case 'file':
-                    if ($fileinfo->getSize() <= $maxFileSize) {
-                        $content = file_get_contents($fileinfo->getPathname());
+                    if ($fileinfo->get_size() <= $max_file_size) {
+                        $content = file_get_contents($fileinfo->get_pathname());
                     } else {
-                        $content = new LargeFileContent($fileinfo->getSize());
+                        $content = new Large_File_Content($fileinfo->get_size());
                     }
-
-                    self::newFile(
-                        $fileinfo->getFilename(),
-                        octdec(substr(sprintf('%o', $fileinfo->getPerms()), -4))
-                    )
-                        ->withContent($content)
-                        ->at($baseDir);
+                    self::new_file($fileinfo->get_filename(), octdec(substr(sprintf('%o', $fileinfo->get_perms()), -4)))->with_content($content)->at($base_dir);
                     break;
-
                 case 'dir':
-                    if (! $fileinfo->isDot()) {
-                        self::copyFromFileSystem(
-                            $fileinfo->getPathname(),
-                            self::newDirectory(
-                                $fileinfo->getFilename(),
-                                octdec(substr(sprintf('%o', $fileinfo->getPerms()), -4))
-                            )->at($baseDir),
-                            $maxFileSize
-                        );
+                    if (!$fileinfo->is_dot()) {
+                        self::copy_from_file_system($fileinfo->get_pathname(), self::new_directory($fileinfo->get_filename(), octdec(substr(sprintf('%o', $fileinfo->get_perms()), -4)))->at($base_dir), $max_file_size);
                     }
-
                     break;
-
                 case 'block':
-                    self::newBlock(
-                        $fileinfo->getFilename(),
-                        octdec(substr(sprintf('%o', $fileinfo->getPerms()), -4))
-                    )->at($baseDir);
+                    self::new_block($fileinfo->get_filename(), octdec(substr(sprintf('%o', $fileinfo->get_perms()), -4)))->at($base_dir);
                     break;
             }
         }
-
-        return $baseDir;
+        return $base_dir;
     }
-
     /**
      * returns a new file with given name
      *
      * @param string   $name        name of file to create
      * @param int|null $permissions permissions of file to create
      */
-    public static function newFile(string $name, ?int $permissions = null): vfsStreamFile
+    public static function new_file(string $name, ?int $permissions = null): Vfs_Stream_File
     {
-        return new vfsStreamFile($name, $permissions);
+        return new Vfs_Stream_File($name, $permissions);
     }
-
     /**
      * Returns a new erroneous file with given name.
      *
@@ -404,14 +347,10 @@ class vfsStream
      * @param string[] $errorMessages Formatted as [action => message], e.g. ['open' => 'error message']
      * @param int|null $permissions   permissions of file to create
      */
-    public static function newErroneousFile(
-        string $name,
-        array $errorMessages,
-        ?int $permissions = null
-    ): vfsStreamErroneousFile {
-        return new vfsStreamErroneousFile($name, $errorMessages, $permissions);
+    public static function new_erroneous_file(string $name, array $error_messages, ?int $permissions = null): Vfs_Stream_Erroneous_File
+    {
+        return new Vfs_Stream_Erroneous_File($name, $error_messages, $permissions);
     }
-
     /**
      * returns a new directory with given name
      *
@@ -422,58 +361,51 @@ class vfsStream
      * @param string   $name        name of directory to create
      * @param int|null $permissions permissions of directory to create
      */
-    public static function newDirectory(string $name, ?int $permissions = null): vfsStreamDirectory
+    public static function new_directory(string $name, ?int $permissions = null): Vfs_Stream_Directory
     {
         if (substr($name, 0, 1) === '/') {
             $name = substr($name, 1);
         }
-
-        $firstSlash = strpos($name, '/');
-        if ($firstSlash === false) {
-            return new vfsStreamDirectory($name, $permissions);
+        $first_slash = strpos($name, '/');
+        if ($first_slash === false) {
+            return new Vfs_Stream_Directory($name, $permissions);
         }
-
-        $ownName = substr($name, 0, $firstSlash);
-        $subDirs = substr($name, $firstSlash + 1);
-        $directory = new vfsStreamDirectory($ownName, $permissions);
-        if (strlen($subDirs) > 0) {
-            self::newDirectory($subDirs, $permissions)->at($directory);
+        $own_name = substr($name, 0, $first_slash);
+        $sub_dirs = substr($name, $first_slash + 1);
+        $directory = new Vfs_Stream_Directory($own_name, $permissions);
+        if (strlen($sub_dirs) > 0) {
+            self::new_directory($sub_dirs, $permissions)->at($directory);
         }
-
         return $directory;
     }
-
     /**
      * returns a new block with the given name
      *
      * @param string   $name        name of the block device
      * @param int|null $permissions permissions of block to create
      */
-    public static function newBlock(string $name, ?int $permissions = null): vfsStreamBlock
+    public static function new_block(string $name, ?int $permissions = null): Vfs_Stream_Block
     {
-        return new vfsStreamBlock($name, $permissions);
+        return new Vfs_Stream_Block($name, $permissions);
     }
-
     /**
      * returns current user
      *
      * If the system does not support posix_getuid() the current user will be root (0).
      */
-    public static function getCurrentUser(): int
+    public static function get_current_user(): int
     {
         return function_exists('posix_getuid') ? posix_getuid() : self::OWNER_ROOT;
     }
-
     /**
      * returns current group
      *
      * If the system does not support posix_getgid() the current group will be root (0).
      */
-    public static function getCurrentGroup(): int
+    public static function get_current_group(): int
     {
         return function_exists('posix_getgid') ? posix_getgid() : self::GROUP_ROOT;
     }
-
     /**
      * use visitor to inspect a content structure
      *
@@ -491,59 +423,52 @@ class vfsStream
      *
      * @since   0.10.0
      */
-    public static function inspect(vfsStreamVisitor $visitor, ?vfsStreamContent $content = null): vfsStreamVisitor
+    public static function inspect(Vfs_Stream_Visitor $visitor, ?Vfs_Stream_Content $content = null): Vfs_Stream_Visitor
     {
         if ($content !== null) {
             return $visitor->visit($content);
         }
-
-        $root = vfsStreamWrapper::getRoot();
+        $root = Vfs_Stream_Wrapper::get_root();
         if ($root === null) {
             throw new InvalidArgumentException('No content given and no root directory set.');
         }
-
-        return $visitor->visitDirectory($root);
+        return $visitor->visit_directory($root);
     }
-
     /**
      * sets quota to given amount of bytes
      *
      * @since  1.1.0
      */
-    public static function setQuota(int $bytes): void
+    public static function set_quota(int $bytes): void
     {
-        vfsStreamWrapper::setQuota(new Quota($bytes));
+        Vfs_Stream_Wrapper::set_quota(new Quota($bytes));
     }
-
     /**
      * checks if vfsStream lists dotfiles in directory listings
      *
      * @since   1.3.0
      */
-    public static function useDotfiles(): bool
+    public static function use_dotfiles(): bool
     {
-        return self::$dotFiles;
+        return self::$dot_files;
     }
-
     /**
      * disable dotfiles in directory listings
      *
      * @since  1.3.0
      */
-    public static function disableDotfiles(): void
+    public static function disable_dotfiles(): void
     {
-        self::$dotFiles = false;
+        self::$dot_files = false;
     }
-
     /**
      * enable dotfiles in directory listings
      *
      * @since  1.3.0
      */
-    public static function enableDotfiles(): void
+    public static function enable_dotfiles(): void
     {
-        self::$dotFiles = true;
+        self::$dot_files = true;
     }
 }
-
 class_alias('bovigo\vfs\vfsStream', 'org\bovigo\vfs\vfsStream');

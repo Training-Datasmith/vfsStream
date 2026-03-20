@@ -1,24 +1,21 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of vfsStream.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace bovigo\vfs;
 
 use function class_alias;
-
 /**
  * Block container.
  *
  * @api
  */
-class vfsStreamBlock extends vfsStreamFile
+class Vfs_Stream_Block extends Vfs_Stream_File
 {
     /**
      * constructor
@@ -28,13 +25,10 @@ class vfsStreamBlock extends vfsStreamFile
     public function __construct(string $name, ?int $permissions = null)
     {
         if (empty($name)) {
-            throw new vfsStreamException('Name of Block device was empty');
+            throw new Vfs_Stream_Exception('Name of Block device was empty');
         }
-
         parent::__construct($name, $permissions);
-
-        $this->type = vfsStreamContent::TYPE_BLOCK;
+        $this->type = Vfs_Stream_Content::TYPE_BLOCK;
     }
 }
-
 class_alias('bovigo\vfs\vfsStreamBlock', 'org\bovigo\vfs\vfsStreamBlock');
